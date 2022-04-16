@@ -15,19 +15,30 @@ $("#additional_fields").click(function (e) {
     $('#new').append(html);
 });
 
+
+$("#variations").click(function (e) {
+    e.preventDefault();
+    var html = '';
+    html += '<div id="inputFormRow">';
+    html += '<div class="input-group mb-3">';
+    html += '<input type="text" name="variation_field[]" class="form-control m-input" placeholder="Field" autocomplete="off">';
+    html += '<input type="text" name="variation_name[]" class="form-control m-input" placeholder="Vaule" autocomplete="off">'; 
+    html += '<input type="text" name="variation_price[]" class="form-control m-input" placeholder="Price" autocomplete="off">';
+    html += '<div class="input-group-append">';
+    html += '<button id="removeRow" type="button" class="btn btn-danger">x</button>';
+    html += '</div>';
+    html += '</div>';
+    html +='</div>';
+
+    $('#new_variation').append(html);
+});
+
+
 //Create div is deleted when clicked on X button
 $(document).on("click", "button#removeRow" , function() {    
     $(this).parent().parent().remove();
 });
 
-//Hiding variation section by default
-$('#new_variation').hide();
-
-
-//Variation section is toggeled when clicked on variation button
-$("#variations").click(function(){
-    $("#new_variation").toggle();
-});
 
 
 //popup div is hidden by default
@@ -61,6 +72,10 @@ $(document).ready(function(){
  }); 
 });
 
+/**
+ * Function to display one product details in Popup window 
+ * @param {} data 
+ */
 function oneProduct(data)
 {
     additionals = data[0];
@@ -71,14 +86,13 @@ function oneProduct(data)
         value = additionals['value'];
     }
     
-
-    if (typeof(variations) != 'undefined') 
-    {    
-        color = variations['color'];
-        size = variations['size'];
+    if( variations) {
+        variation_field = variations['Variation Field'];
+        variation_name = variations['Variation Name'];
+        variation_price = variations['Variation Price'];
     }
-
- 
+    
+  
     
     var html = '';
     html += '<ul>';
@@ -87,21 +101,25 @@ function oneProduct(data)
     html += '<li> Product Price : '+data['price']+' </li>';
     html += '<li> Product Stocks : '+data['stock']+' </li>';
     html += '<ul>';
-    if (typeof(label) != 'undefined' && typeof(variations) != 'undefined') {
+    if (typeof(label) != 'undefined' && typeof(value) != 'undefined') {
         html += '<h4>Additional Information</h4>'
         for (var i=0;i<label.length;i++) {
             html += label[i] + " : " + value[i]+"<br>";
         }
     }
-    if (typeof(color) != 'undefined' && typeof(size) != 'undefined') {
-    html += '<h4>Variations</h4>'
-    html += 'Color : '+color+"<br>";
-    html += 'Size : '+size;
+    if (typeof(variation_field) != 'undefined' && typeof(variation_name) != 'undefined'  && typeof(variation_price) != 'undefined') {
+        html += '<h4>Variations</h4>'
+        for (var i=0;i<variation_field.length;i++) {
+            html += variation_field[i] + " : " + variation_name[i]+" : " + variation_price[i]+" ₹<br>";
+        }
     }
     $('#data').html(html);
 }
 
 
+/**
+ * Function of search product using Name and Id
+ */
 function search() {
     var input, filter, table, tr, td1, td2, i, txtValue1, txtValue2;
     input = document.getElementById("searchValue");

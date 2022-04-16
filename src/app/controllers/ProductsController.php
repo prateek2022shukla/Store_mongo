@@ -27,7 +27,9 @@ class ProductsController extends Controller
         $stock = $this->request->getPost('product_stock');
         $label = $this->request->getPost('label');
         $value = $this->request->getPost('value');
-     
+        $variation_field = $this->request->getPost('variation_field');
+        $variation_name = $this->request->getPost('variation_name');
+        $variation_price = $this->request->getPost('variation_price');
         $additional = array(
             'label' => $label,
             'value' => $value,
@@ -39,15 +41,17 @@ class ProductsController extends Controller
             'price' => $price,
             'stock' => $stock,
         ];
-        $variation = [
-            'color' => $this->request->getPost('color'),
-            'size' => $this->request->getPost('size'),
-        ];
+        $variation = array(
+            'Variation Field' => $variation_field,
+            'Variation Name' => $variation_name,
+            'Variation Price' => $variation_price,
+        );
+               
         
         if ($additional['label'] && $additional['value']) {
             array_push($data, $additional);
         }
-        if ($variation['color'] && $variation['size']) {
+        if ($variation) {
             array_push($data, $variation);
         }
           
@@ -117,13 +121,17 @@ class ProductsController extends Controller
      */
     public function updateAction()
     {
+        
         $name = $this->request->getPost('product_name');
         $category = $this->request->getPost('product_category');
         $price = $this->request->getPost('product_price');
         $stock = $this->request->getPost('product_stock');
         $label = $this->request->getPost('label');
         $value = $this->request->getPost('value');
-        $id = $this->request->getPost('id'); 
+        $variation_field = $this->request->getPost('variation_field');
+        $variation_name = $this->request->getPost('variation_name');
+        $variation_price = $this->request->getPost('variation_price');
+        $id = $this->request->getPost('id');
      
         $additional = array(
             'label' => $label,
@@ -136,17 +144,18 @@ class ProductsController extends Controller
             'price' => $price,
             'stock' => $stock,
         ];
-        $variation = [
-            'color' => $this->request->getPost('color'),
-            'size' => $this->request->getPost('size'),
-        ];
+        $variation = array(
+            'Variation Field' => $variation_field,
+            'Variation Name' => $variation_name,
+            'Variation Price' => $variation_price,
+        );
 
         
         
         if ($additional['label'] && $additional['value']) {
             array_push($data, $additional);
         }
-        if ($variation['color'] && $variation['size']) {
+        if ($variation) {
             array_push($data, $variation);
         }
           

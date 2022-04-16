@@ -7,10 +7,12 @@ $variations = $data[1];
 
 $label = $additionals['label'];
 $value = $additionals['value'];
-// echo '<pre>';
-// print_r($label);
-$color = $variations['color'];
+$variation_field = $variations['Variation Field'];
+$variation_name = $variations['Variation Name'];
+$variation_price = $variations['Variation Price'];
 $size = $variations['size'];
+// echo '<pre>';
+// print_r($variation_price);
 
 
 ?>
@@ -32,14 +34,19 @@ $size = $variations['size'];
             <td><input type="text" value="<?php echo $value[$i]; ?>" name="value[]"> </td>
         </tr>       
     <?php } 
-    } ?>    
-
-    <?php if ($color && $size) {?>
-    <tr>
-        <td><input type="text" value="<?php echo $color; ?>" name="color"></td>
-        <td><input type="text" value="<?php echo $size; ?>" name="size"></td>
-    </tr>
-    <?php }?>
+    } ?>   
+    
+<?php
+    if ($variation_field) { 
+        
+    for ($i=0; $i<count($variation_field); $i++) { ?>
+        <tr>      
+            <td><input type="text" value="<?php echo $variation_field[$i]; ?>" name="variation_field[]"> </td>
+            <td><input type="text" value="<?php echo $variation_name[$i]; ?>" name="variation_name[]"> </td>
+            <td><input type="text" value="<?php echo $variation_price[$i]; ?>" name="variation_price[]"> </td>
+        </tr>       
+    <?php } 
+    } ?> 
 </table>
 <div class="d-flex justify-content-center">
     <input type="hidden" name="id" value="<?php echo $this->request->getQuery('id'); ?>" >
