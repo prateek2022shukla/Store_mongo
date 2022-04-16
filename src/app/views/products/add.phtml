@@ -1,0 +1,56 @@
+<?php
+
+// print_r($data);
+
+// foreach ($data as $val) {
+//     echo $val['name'].'<br>';
+// }
+
+?>
+
+<a style="position:relative; top:5%" href="/products/view">Show Products</a>
+
+<div class="main row py-5">
+   
+    <form action="/products/add" method="post" class="d-flex col sm-4 md-4">
+
+            <div class="additional my-5 mx-3 col sm-4 md-4">
+            <a class="btn btn-outline-danger text-dark" id="additional_fields" >Addition Field</a>
+            <div id="new" class="mt-4">
+            </div>
+            </div>
+
+            <div class="form col sm-4 md-4">
+            <h1 class="text-center">Add New Product</h1>
+            <input type="text" name="product_name" placeholder="Product Name*" class="form-control my-3" required>
+            <input type="text" name="product_category" placeholder="Product Categegory*" class="form-control my-3" required>
+            <input type="text" name="product_price" placeholder="Product Price*" class="form-control my-3" required>
+            <input type="text" name="product_stock" placeholder="Product Stock*" class="form-control my-3" required>
+            <div class="submit d-flex justify-content-center">
+                <input type="submit" value="Add Product" class="btn btn-primary">
+            </div>
+            </div>
+            
+            
+            <div class="variations my-5 mx-3 col sm-4 md-4">
+                <a class="btn btn-outline-danger text-dark" id="variations" >Vairations</a>
+            <div id="new_variation" class=" mt-4">
+                <h5>Colors</h5>
+                <div class="colors d-flex">
+                    <span><input type="checkbox" name="color" id="color" class="mx-2" value="Red"> Red</span>
+                    <span><input type="checkbox" name="color" id="color" class="mx-2" value="Green"> Green</span>
+                    <span><input type="checkbox" name="color" id="color" class="mx-2" value="Blue"> Blue</span>          
+                </div>
+
+                <h5 class="mt-4">Sizes</h5>
+                <div class="size d-flex">
+                    <span><input type="checkbox" name="size" id="size" class="mx-2" value="S"> S</span>
+                    <span><input type="checkbox" name="size" id="size" class="mx-2" value="M"> M</span>
+                    <span><input type="checkbox" name="size" id="size" class="mx-2" value="L"> L</span>          
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+</div>
+

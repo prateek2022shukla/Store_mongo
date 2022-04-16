@@ -1,0 +1,49 @@
+<?php
+
+// print_r($editproduct);
+$data = $editproduct;
+$additionals = $data[0];
+$variations = $data[1];
+
+$label = $additionals['label'];
+$value = $additionals['value'];
+// echo '<pre>';
+// print_r($label);
+$color = $variations['color'];
+$size = $variations['size'];
+
+
+?>
+
+<div class="editproduct w-50 m-auto">
+    <h1>Edit Product</h1>
+    <form action="/products/update" method="post">
+    <input type="text" value="<?php echo $data['name']; ?>" class="form-control" name="product_name">
+    <input type="text" value="<?php echo $data['category']; ?>" class="form-control" name="product_category">
+    <input type="text" value="<?php echo $data['price']; ?>" class="form-control" name="product_price">
+    <input type="text" value="<?php echo $data['stock']; ?>" class="form-control" name="product_stock">
+
+<table class="table table-striped">
+    <?php
+    if ($label) { 
+    for ($i=0; $i<count($label); $i++) { ?>
+        <tr>      
+            <td><input type="text" value="<?php echo $label[$i]; ?>" name="label[]"> </td>
+            <td><input type="text" value="<?php echo $value[$i]; ?>" name="value[]"> </td>
+        </tr>       
+    <?php } 
+    } ?>    
+
+    <?php if ($color && $size) {?>
+    <tr>
+        <td><input type="text" value="<?php echo $color; ?>" name="color"></td>
+        <td><input type="text" value="<?php echo $size; ?>" name="size"></td>
+    </tr>
+    <?php }?>
+</table>
+<div class="d-flex justify-content-center">
+    <input type="hidden" name="id" value="<?php echo $this->request->getQuery('id'); ?>" >
+    <input type="submit" value="Update" class="btn btn-success px-5">
+</div>
+</form>
+</div>
