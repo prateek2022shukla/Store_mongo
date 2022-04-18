@@ -4,12 +4,13 @@ use Phalcon\Mvc\Controller;
 class IndexController extends Controller
 {
      /**
-     * Function to redirect to products view page
+     * Function to redirect to index view page
      *
      * @return void
      */
     public function indexAction()
     {
-        $this->response->redirect('/products/view');
+        
+        
     }
 }

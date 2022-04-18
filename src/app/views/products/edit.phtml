@@ -1,6 +1,4 @@
 <?php
-
-// print_r($editproduct);
 $data = $editproduct;
 $additionals = $data[0];
 $variations = $data[1];
@@ -11,10 +9,7 @@ $variation_field = $variations['Variation Field'];
 $variation_name = $variations['Variation Name'];
 $variation_price = $variations['Variation Price'];
 $size = $variations['size'];
-// echo '<pre>';
-// print_r($variation_price);
-
-
+$count = 0;
 ?>
 
 <div class="editproduct w-50 m-auto">
@@ -38,14 +33,22 @@ $size = $variations['size'];
     
 <?php
     if ($variation_field) { 
+       
         
-    for ($i=0; $i<count($variation_field); $i++) { ?>
+    for ($i=1; $i<=count($variation_field); $i++) { 
+        $count += 1;
+        for ( $j= 0 ; $j< count($variation_field[$i]); $j++) {
+        ?>
         <tr>      
-            <td><input type="text" value="<?php echo $variation_field[$i]; ?>" name="variation_field[]"> </td>
-            <td><input type="text" value="<?php echo $variation_name[$i]; ?>" name="variation_name[]"> </td>
-            <td><input type="text" value="<?php echo $variation_price[$i]; ?>" name="variation_price[]"> </td>
+            <td><input type="text" value="<?php echo $variation_field[$i][$j]; ?>" name="variation_field[<?php echo $count?>][]"> </td>
+            <td><input type="text" value="<?php echo $variation_name[$i][$j]; ?>" name="variation_name[<?php echo $count?>][]"> </td>
+            <td><input type="text" value="<?php echo $variation_field[$i][$j+1]; ?>" name="variation_field[<?php echo $count?>][]"> </td>
+            <td><input type="text" value="<?php echo $variation_name[$i][$j+1]; ?>" name="variation_name[<?php echo $count?>][]"> </td>
+            <td><input type="text" value="<?php echo $variation_price[$i]; ?>" name="variation_price[<?php echo $count?>][]"> </td>
+            <?php break; ?>
         </tr>       
-    <?php } 
+    <?php    } 
+        }
     } ?> 
 </table>
 <div class="d-flex justify-content-center">

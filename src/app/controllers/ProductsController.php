@@ -21,6 +21,8 @@ class ProductsController extends Controller
      */
     public function addAction()
     {
+        echo '<pre>';
+        // die(print_r($this->request->getPost()));
         $name = $this->request->getPost('product_name');
         $category = $this->request->getPost('product_category');
         $price = $this->request->getPost('product_price');
@@ -121,7 +123,6 @@ class ProductsController extends Controller
      */
     public function updateAction()
     {
-        
         $name = $this->request->getPost('product_name');
         $category = $this->request->getPost('product_category');
         $price = $this->request->getPost('product_price');

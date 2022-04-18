@@ -1,3 +1,5 @@
+var count = 0;
+
 //New div is created when clicked on addition field button
 $("#additional_fields").click(function (e) {
     e.preventDefault();
@@ -16,29 +18,48 @@ $("#additional_fields").click(function (e) {
 });
 
 
+/**
+ * Function to create new  variation div when clicked on New Variation Button
+ */
+
 $("#variations").click(function (e) {
-    e.preventDefault();
+    count += 1;
     var html = '';
     html += '<div id="inputFormRow">';
-    html += '<div class="input-group mb-3">';
-    html += '<input type="text" name="variation_field[]" class="form-control m-input" placeholder="Field" autocomplete="off">';
-    html += '<input type="text" name="variation_name[]" class="form-control m-input" placeholder="Vaule" autocomplete="off">'; 
-    html += '<input type="text" name="variation_price[]" class="form-control m-input" placeholder="Price" autocomplete="off">';
+    html += '<div class="input-group mb-3" id = "newRow">';
+    html += '<input type="text" name="variation_field['+count+'][]" class="form-control m-input" placeholder="Name" autocomplete="off">';
+    html += '<input type="text" name="variation_name['+count+'][]" class="form-control m-input" placeholder="Value" autocomplete="off">';
     html += '<div class="input-group-append">';
-    html += '<button id="removeRow" type="button" class="btn btn-danger">x</button>';
+    html += '<button id="addRow" type="button" class="btn btn-danger">+</button>';
     html += '</div>';
     html += '</div>';
+    html += '<input type="text" name="variation_price['+count+']" class="form-control m-input" placeholder="Price" autocomplete="off">'
+    html += '<button type="button" id = "removeRow" class = "btn btn-outline-danger"> Delete Variation </button>'
     html +='</div>';
 
     $('#new_variation').append(html);
 });
 
 
+
 //Create div is deleted when clicked on X button
 $(document).on("click", "button#removeRow" , function() {    
-    $(this).parent().parent().remove();
+    $(this).parent().remove();
 });
 
+/**
+ * Function to add a new row (fieldName, Value) when clicked on + icon
+ */
+$(document).on("click", "button#addRow" , function() {
+    html = '';
+    html += '<div id = "newRow" class = "input-group">'
+    html += '<input type="text" name="variation_field['+count+'][]" class="form-control m-input" placeholder="Name" autocomplete="off">';
+    html += '<input type="text" name="variation_name['+count+'][]" class="form-control m-input" placeholder="Vaule" autocomplete="off">';
+    html += '<button type="button" id = "removeRow" class = "btn btn-outline-danger">X</button>';
+    html += '</div> '  
+    $(this).parent().parent().append(html);
+
+});
 
 
 //popup div is hidden by default
@@ -56,7 +77,9 @@ $("#close").click(function(e){
     e.preventDefault();
 });
 
-
+/**
+ * Function to get data of a particular product by matching product id
+ */
 $(document).ready(function(){
     $(document).on('click', '#show_popup',function(){         
      $.ajax(
@@ -85,13 +108,13 @@ function oneProduct(data)
         label = additionals['label'];
         value = additionals['value'];
     }
+   
     
-    if( variations) {
+    if( variations) {        
         variation_field = variations['Variation Field'];
         variation_name = variations['Variation Name'];
-        variation_price = variations['Variation Price'];
-    }
-    
+        variation_price = variations['Variation Price'];       
+    }   
   
     
     var html = '';
@@ -107,10 +130,23 @@ function oneProduct(data)
             html += label[i] + " : " + value[i]+"<br>";
         }
     }
+
+    if(typeof(variation_field) != 'undefined') {
+        for (key in variation_field) {
+            if (variation_field.hasOwnProperty(key))
+                count++;
+        }
+    }
+
+   size = count; 
+
     if (typeof(variation_field) != 'undefined' && typeof(variation_name) != 'undefined'  && typeof(variation_price) != 'undefined') {
         html += '<h4>Variations</h4>'
-        for (var i=0;i<variation_field.length;i++) {
-            html += variation_field[i] + " : " + variation_name[i]+" : " + variation_price[i]+" ₹<br>";
+        for (var i=1;i<=count;i++) {     
+                for (var j= 0;j<variation_field[i].length ; j++) {
+                  html += variation_field[i][j]+ " : "+ variation_name[i][j] + " : " + variation_field[i][j+1] + " : " + variation_name[i][j+1] + " : " + variation_price[i] + "<br>";
+                  break;
+            }         
         }
     }
     $('#data').html(html);
