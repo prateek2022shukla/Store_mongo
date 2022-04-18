@@ -1,49 +1,57 @@
 <?php
+//  print_r($products);
+$products_arr = [];
+foreach ($products as $value) {
+    array_push($products_arr, array(
+        'product_id' => strval($value->_id),
+        'product_name' => $value->name,
+        )
+    );
+} 
 
+
+$variation_field = $product_variation[1]['Variation Field'];
+$variation_name = $product_variation[1]['Variation Name'];
+$variation_price = $product_variation[1]['Variation Price'];
+
+
+ 
 ?>
 
-<a style="position:relative; top:5%" href="/products/view">Show Products</a>
+<a style="position:relative; top:5%" href="/orders/view">Show Orders</a>
 
 <div class="main row py-5">
    
-    <form action="/products/add" method="post" class="d-flex col sm-4 md-4">
-
-            <div class="additional my-5 mx-3 col sm-4 md-4">
-            <a class="btn btn-outline-danger text-dark" id="additional_fields" >Addition Field</a>
-            <div id="new" class="mt-4">
-            </div>
-            </div>
+    <form action="/orders/add" method="post" class="w-50 m-auto">
+           
 
             <div class="form col sm-4 md-4">
+                
             <h1 class="text-center">Add New Order</h1>
-            <input type="text" name="product_name" placeholder="Product Name*" class="form-control my-3" required>
-            <input type="text" name="product_category" placeholder="Product Categegory*" class="form-control my-3" required>
-            <input type="text" name="product_price" placeholder="Product Price*" class="form-control my-3" required>
-            <input type="text" name="product_stock" placeholder="Product Stock*" class="form-control my-3" required>
-            <div class="submit d-flex justify-content-center">
-                <input type="submit" value="Add Product" class="btn btn-primary">
-            </div>
-            </div>
-            
-            
-            <!-- <div class="variations my-5 mx-3 col sm-4 md-4">
+           <select name="product" id="getProduct" class="p-2 w-100 bg-muted" >
+
+           <option value="0">Default</option>
+                <?php for ($i=0; $i<count($products_arr); $i++) {?>
+                    <option value="<?php echo $products_arr[$i]['product_id']; ?>" > <?php echo $products_arr[$i]['product_name']; ?> 
+                </option>
+
+                 <?php }?>
               
+           </select>
+
+           <div id="variations">
+               
+           </div>
+            <input type="text" name="customer_name" placeholder="Customer Name" class="form-control my-3" required>
+            <input type="text" name="quantity" placeholder="Quantity*" class="form-control my-3" required>           
+            <div class="submit d-flex justify-content-center">
+                <input type="submit" value="Add Order" class="btn btn-primary">
+            </div>
+            </div>
+                       
+            
            
-            <a class="btn btn-outline-danger text-dark" id="variations">New Variation</a>
-            <div id="new_variation" class="mt-4">
-                
-            </div>
-            </div> -->
-
-            <!-- <div class="col md-4">
-            <a class="btn btn-outline-danger text-dark" id="create_new_variation">New Variation</a>
-            <div id="show_variations"> -->
-                
-            </div>
-
-            <!-- </div> -->
         </form>
     </div>
 </div>
 </div>
-

@@ -177,3 +177,66 @@ function search() {
     }
   }
  
+
+
+  $(document).ready(function(){
+    $(document).on('change', '#getProduct',function(){   
+        // console.log(19);   
+        id = $(this).val();
+        // console.log(id);     
+     $.ajax(
+         {
+         'url': '/orders/getproduct',
+         'method':'POST',
+         'data' : {'product_id':$(this).val()},
+         'datatype' : 'JSON'
+     }).done(function(data){     
+         jData = JSON.parse(data);  
+        //  console.log(jData);    
+         allVariation(jData);          
+     });
+ }); 
+});
+
+function allVariation(data)
+{
+    variations = data[1];
+    if( variations) {        
+        variation_field = variations['Variation Field'];
+        variation_name = variations['Variation Name'];
+        variation_price = variations['Variation Price'];       
+    }   
+
+    if(typeof(variation_field) != 'undefined') {
+        for (key in variation_field) {
+            if (variation_field.hasOwnProperty(key))
+                count++;
+        }
+    }
+
+   size = count; 
+
+    if (typeof(variation_field) != 'undefined' && typeof(variation_name) != 'undefined'  && typeof(variation_price) != 'undefined') {
+        var html = '';
+        var varient = {};
+        html += '<h4>Variations</h4>';
+        for (var i=1;i<=count;i++) { 
+                for (var j= 0;j<variation_field[i].length ; j++) {
+                    
+                  html += variation_field[i][j]+ " : "+ variation_name[i][j] + " : " + variation_field[i][j+1] + " : " + variation_name[i][j+1] + " : " + variation_price[i];
+                  varient[ variation_field[i][j]]  =   variation_name[i][j] 
+                  varient[ variation_field[i][j+1]]  =   variation_name[i][j+1] 
+                  varient['price'] = variation_price[i]
+                  
+                  break;
+            }   
+            console.log(varient);
+            html += "<input type = 'radio' name = 'varient' value = '"+JSON.stringify(varient)+"'>"+"<br>";
+
+        }
+    }
+    $('#variations').html(html);
+  
+    
+    
+}

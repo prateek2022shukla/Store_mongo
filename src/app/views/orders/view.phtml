@@ -1,1 +1,95 @@
+<?php
+
+
+
+?>
+
 <a href="/orders/add">Add New Order</a>
+<h1 class="text-center my-5">Orders</h1>
+
+<div class="filters mb-2 d-flex">
+    <div class="status">
+        <form action="/orders/view" method="post">
+        <select name="status" id="" class=" p-2" onchange="this.form.submit()">
+            <option value="-1">Choose a Status</option>
+            <option value="paid">Paid</option>
+            <option value="processing">Processing</option>
+            <option value="dispatched">Dispatched</option>
+            <option value="shipped">Shipped</option>
+            <option value="refunded">Refunded</option>
+        </select>
+        </form>
+    </div>
+
+
+    <div class="time mx-4">
+        <form action="/orders/view" method="post" >
+        <select name="time" id="" class=" p-2" onchange="this.form.submit()">
+            <option value="-1">Time</option>
+            <option value="today">Today</option>
+            <option value="this_week">This Week</option>
+            <option value="this_month">This Month</option>          
+        </select>
+        </form>
+    </div>
+
+    <div class="custom">
+    <form action="/orders/view" method="post">
+        <input type="text" name="startdate" id="" placeholder="DD/MM/YYYY">
+        <input type="text" name="enddate" id="" placeholder="DD/MM/YYYY">
+        <input type="submit" value="Check" name="Check" class="btn btn-warning">
+    </form>
+    </div>
+</div>
+
+<table class="table table-striped" id="myTable">
+    <tr>
+        <th>#</th>
+        <th>Name</th>
+        <th>Varient</th>        
+        <th>Qunatity</th>        
+        <th>Date</th>        
+        <th>Status</th>        
+        <th>Change Status</th>        
+    </tr>
+
+<?php foreach ($orders as $key) { ?>
+    <tr id="productRow">
+        <td><?php echo $key['_id']; ?></td>
+        <td><?php echo $key['name']; ?></td>
+        <td><?php echo $key[0]; ?></td>
+        <td><?php echo $key['quantity']; ?></td>      
+        <td><?php echo $key['date']; ?></td> 
+        <td><?php echo $key['status']; ?></td> 
+        <td>
+            <form action="/orders/changestatus" method="post">
+            <select name="status" id="" class=" p-2" onchange="this.form.submit()">
+                <option value="paid">Paid</option>
+                <option value="processing">Processing</option>
+                <option value="dispatched">Dispatched</option>
+                <option value="shipped">Shipped</option>
+                <option value="refunded">Refunded</option>
+            </select>
+            <input type="hidden" name="order_id" value="<?php echo $key['_id']; ?>">
+            </form>
+        </td>     
+    </tr>
+
+<?php }?>    
+</table>
+
+<div id="popup" class="w-75 bg-dark text-light" style="position: absolute; top:15%; left:12.5%; height:400px; opacity:0.8;">
+    <div class="d-flex justify-content-end">
+        <a  id = "close" class="text-light btn btn-danger">X</a>
+    </div>
+
+    <div id="data" class="w-50 m-auto">
+
+    </div>
+</div>
+<?php
+//  echo $oneproduct['name'];
+
+?>
+</div>
+
