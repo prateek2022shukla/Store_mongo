@@ -107,6 +107,11 @@ class OrdersController extends Controller
             $custom = $order_table->find(['date' => ['$gte' => $start_date, '$lte' => $end_date]]);
             $this->view->orders = $custom;
         }
+
+        if ($this->request->getPost('all')) {
+            $orders = $order_table->find();
+            $this->view->orders = $orders;
+        }
     }
 
     /**
